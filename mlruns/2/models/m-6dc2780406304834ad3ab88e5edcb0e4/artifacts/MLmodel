@@ -1,0 +1,23 @@
+artifact_path: /Users/abhishekdarji/MyDrive/CMPE258-Project/medprompt-mlops/mlruns/2/models/m-6dc2780406304834ad3ab88e5edcb0e4/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.14.2
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.11.0
+mlflow_version: 3.12.0
+model_id: m-6dc2780406304834ad3ab88e5edcb0e4
+model_size_bytes: 267632719
+model_uuid: m-6dc2780406304834ad3ab88e5edcb0e4
+prompts: null
+run_id: da0200d9cb4f4a0b95800581fd55d770
+utc_time_created: '2026-05-07 21:55:13.840184'

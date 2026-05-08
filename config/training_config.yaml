@@ -1,0 +1,43 @@
+# =============================================================
+# MedPrompt Training Configuration — DistilBERT (CPU-friendly)
+# All hyperparameters defined here for easy ablation studies
+# =============================================================
+
+model:
+  base_model_id: "distilbert-base-uncased"
+  fallback_model_id: "bert-base-uncased"
+  max_seq_length: 256
+
+training:
+  output_dir: "./outputs/results"
+  num_train_epochs: 3
+  per_device_train_batch_size: 16
+  per_device_eval_batch_size: 16
+  gradient_accumulation_steps: 1
+  learning_rate: 3.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  lr_scheduler_type: "cosine"
+  logging_steps: 10
+  eval_steps: 50
+  save_steps: 100
+  fp16: false
+  max_grad_norm: 1.0
+
+data:
+  dataset_path: "./data/mtsamples.csv"
+  top_k_specialties: 15
+  train_split: 0.70
+  val_split: 0.15
+  test_split: 0.15
+  random_seed: 42
+  max_input_length: 256
+
+mlflow:
+  experiment_name: "medprompt_training"
+  model_name: "MedPrompt_DistilBERT"
+  tracking_uri: "local"
+
+huggingface:
+  hub_model_id: "abhishekdarji23/medprompt-distilbert"   # CHANGE THIS
+  push_to_hub: true

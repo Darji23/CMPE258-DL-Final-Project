@@ -1,0 +1,36 @@
+{
+  "specialty_to_id": {
+    "Cardiovascular / Pulmonary": 0,
+    "Consult - History and Phy.": 1,
+    "Discharge Summary": 2,
+    "ENT - Otolaryngology": 3,
+    "Gastroenterology": 4,
+    "General Medicine": 5,
+    "Hematology - Oncology": 6,
+    "Neurology": 7,
+    "Neurosurgery": 8,
+    "Obstetrics / Gynecology": 9,
+    "Orthopedic": 10,
+    "Radiology": 11,
+    "SOAP / Chart / Progress Notes": 12,
+    "Surgery": 13,
+    "Urology": 14
+  },
+  "id_to_specialty": {
+    "0": "Cardiovascular / Pulmonary",
+    "1": "Consult - History and Phy.",
+    "2": "Discharge Summary",
+    "3": "ENT - Otolaryngology",
+    "4": "Gastroenterology",
+    "5": "General Medicine",
+    "6": "Hematology - Oncology",
+    "7": "Neurology",
+    "8": "Neurosurgery",
+    "9": "Obstetrics / Gynecology",
+    "10": "Orthopedic",
+    "11": "Radiology",
+    "12": "SOAP / Chart / Progress Notes",
+    "13": "Surgery",
+    "14": "Urology"
+  }
+}
