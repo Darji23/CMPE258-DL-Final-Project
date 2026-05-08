@@ -1,9 +1,11 @@
 # MedPrompt — Clinical Note Classification & Summarization
 ### An End-to-End MLOps Pipeline · DistilBERT · CPU-Friendly · Production-Ready
 
-> **Course:** CMPE 258 — Deep Learning
-> **Institution:** San José State University
-> **Semester:** Spring 2026
+**Course:** CMPE 258 — Deep Learning
+
+**Institution:** San José State University
+
+**Semester:** Spring 2026
 
 ---
 
@@ -13,12 +15,11 @@
 |---|---|
 | 🌐 **Live Demo (Gradio App)** | https://huggingface.co/spaces/abhishekdarji23/medprompt |
 | 🤗 **Model Weights (HF Hub)** | https://huggingface.co/abhishekdarji23/medprompt-distilbert |
-| 💻 **GitHub Repository** | https://github.com/darji23/medprompt-mlops |
+| 💻 **GitHub Repository** | https://github.com/darji23/CMPE258-DL-Final-Project |
 | 🎥 **Full Project Presentation (Long)** | *(add YouTube/Drive link)* |
 | 📄 **Slide Deck** | *(add Google Slides / PDF link)* |
 | 📊 **MLflow Experiment Artifacts** | See `artifacts/` folder |
 
-> ⚠️ **Replace all placeholder links above with actual URLs before submission.**
 
 ---
 
@@ -57,8 +58,8 @@ automated retraining, and production deployment on Hugging Face Spaces with
 live drift detection and monitoring. The entire pipeline runs on CPU making it
 fully reproducible without specialized hardware.
 
-Key results: the model achieves **[fill in accuracy]%** accuracy and
-**[fill in macro F1]** macro F1 score across 15 medical specialties on the
+Key results: the model achieves **40.73%** accuracy and
+**40.1%** macro F1 score across 15 medical specialties on the
 held-out test set. Four systematic ablation studies confirm our architectural
 choices and hyperparameter selections.
 
@@ -91,11 +92,11 @@ classification and token-level importance scoring for extractive summarization.
 
 ### Overview of Results
 
-- **15-class medical specialty classification** with [fill in]% accuracy
+- **15-class medical specialty classification** with 40.73% accuracy
 - **Extractive summarization** producing clinically meaningful summaries
 - **Full MLOps pipeline** achieving Level 4 maturity with automated CI/CD,
   model registry, drift detection, and live monitoring
-- **Live production demo** at https://huggingface.co/spaces/abhishekdarji/medprompt
+- **Live production demo** at https://huggingface.co/spaces/abhishekdarji23/medprompt
 
 ---
 
@@ -151,13 +152,8 @@ encoder to learn richer clinical representations than either task alone.
 
 | Member | Role | Specific Contributions |
 |---|---|---|
-| **[Member 1 Name]** | Data Engineer | Notebooks 01–02, `src/utils.py`, preprocessing pipeline, stratified splitting, class weight computation |
-| **[Member 2 Name]** | ML Engineer | `src/model.py`, `src/metrics.py`, notebook 03 training loop, MLflow integration, model registry |
-| **[Member 3 Name]** | Research / Experiments | Notebook 04 ablation studies, MLflow visualization, hyperparameter analysis, report writing |
-| **[Member 4 Name]** | MLOps / Deployment | `app/app.py`, `.github/workflows/retrain.yml`, HF Spaces deployment, drift detection, README |
-
-> **Note:** All team members contributed to testing, documentation review,
-> and the final presentation. The above reflects primary ownership.
+| **[Aniket Anil Naik]** | Data Engineer & Research / Experiments | Notebooks 01–02, `src/utils.py`, preprocessing pipeline, stratified splitting, class weight computation, Notebook 04 ablation studies, MLflow visualization, hyperparameter analysis, report writing |
+| **[Abhishek Darji]** | ML Engineer & MLOps / Deployment  | `src/model.py`, `src/metrics.py`, notebook 03 training loop, MLflow integration, model registry, `app/app.py`, `.github/workflows/retrain.yml`, HF Spaces deployment, drift detection, README |
 
 ---
 
@@ -193,23 +189,21 @@ encoder to learn richer clinical representations than either task alone.
 
 | Specialty | Training Samples | Class Weight |
 |---|---|---|
-| Surgery | 1,103 | lowest (most common) |
-| Consult - History and Phy. | 516 | — |
-| Cardiovascular/Pulmonary | 372 | — |
-| Orthopedic | 355 | — |
-| Radiology | 273 | — |
-| General Medicine | 259 | — |
-| Gastroenterology | 230 | — |
-| Neurology | 223 | — |
-| SOAP/Progress Notes | 166 | — |
-| Obstetrics/Gynecology | 160 | — |
-| Urology | 97 | — |
-| Discharge Summary | 81 | — |
-| ENT | 98 | — |
-| Neurosurgery | 94 | — |
-| Hematology-Oncology | 90 | highest (least common) |
-
-> *(Fill in actual class weights from `outputs/class_weights.json` after running notebook 02)*
+| Surgery | 1,103 | 0.2554 |
+| Consult - History and Phy. | 516 | 0.539 |
+| Cardiovascular/Pulmonary | 372 | 0.7503 |
+| Orthopedic | 355 | 0.7864 |
+| Radiology | 273 | 1.0206 |
+| General Medicine | 259 | 1.076 |
+| Gastroenterology | 230 | 1.2448 |
+| Neurology | 223 | 1.2448 |
+| SOAP/Progress Notes | 166 | 1.6824 |
+| Obstetrics/Gynecology | 160 | 1.791 |
+| Urology | 97 | 1.791 |
+| Discharge Summary | 81 | 2.5704 |
+| ENT | 98 | 2.8917 |
+| Neurosurgery | 94 | 2.9532 |
+| Hematology-Oncology | 90 | 3.0844 |
 
 ### Data Preprocessing Pipeline
 
@@ -542,6 +536,8 @@ GitHub Actions — retrain.yml
 
 ### Image Placeholder — MLflow Model Registry
 > 📸 **[INSERT: Screenshot of MedPrompt_DistilBERT → Production in MLflow]**
+<img width="2934" height="826" alt="image" src="https://github.com/user-attachments/assets/deae7bd5-be3f-48c8-a185-00008783c3bf" />
+
 
 ---
 
