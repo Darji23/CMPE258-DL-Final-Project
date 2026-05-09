@@ -555,7 +555,7 @@ training set but too much dropout prevents the model from learning.
 **Metric:** Validation Macro F1
 
 | Dropout | Val Macro F1 |
-|---|---|---|
+|---|---|
 | 0.1 | 0.1086 |
 | 0.2 | 0.1826|
 | 0.3 | 0.0864 |
@@ -586,7 +586,6 @@ saturation point beyond which more data gives diminishing returns.
 ### Image — Experiment B Chart
 <img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/5b2d5cfe-6dac-4e5f-95c5-cadd027f2931" />
 
-
 ---
 
 ### Experiment C — Learning Rate Sweep
@@ -600,7 +599,7 @@ slow convergence and poor generalisation.
 **Metrics:** Validation Macro F1 
 
 | Learning Rate | Val Macro F1 |
-|---|---|---|---|
+|---|---|
 | 1e-5 | 0.106 | 
 | 3e-5 | 0.0939 |
 | 5e-5 | 0.1715 |
