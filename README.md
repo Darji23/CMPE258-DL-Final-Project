@@ -7,7 +7,7 @@
 
 **Semester:** Spring 2026
 
-**Student Info:** Abhishek Darji (019113471) and Aniket Anil Naik()
+**Student Info:** Abhishek Darji (019113471) and Aniket Anil Naik(019107114)
 
 ---
 
