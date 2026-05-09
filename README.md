@@ -654,16 +654,6 @@ We quantify the accuracy vs latency tradeoff on CPU.
 | **Weighted F1** | F1 weighted by class frequency | Reflects real-world distribution |
 | **Cohen's Kappa** | (observed - expected) / (1 - expected) | Agreement corrected for chance |
 
-### Summarization Metrics
-
-| Metric | Description | Why We Use It |
-|---|---|---|
-| **ROUGE-1** | Unigram overlap | Word-level precision/recall vs reference |
-
-
-**Why ROUGE not BLEU:** BLEU penalises short outputs heavily. Clinical summaries
-are intentionally concise, making BLEU unreliable. ROUGE-L is the standard
-metric in clinical NLP summarization research.
 
 ### Final Test Set Results
 
@@ -672,8 +662,7 @@ metric in clinical NLP summarization research.
 | Accuracy | 0.4073 |
 | Macro F1 | 0.4012 |
 | Weighted F1 | 0.3634 |
-| Cohen's Kappa | *(fill after notebook 03)* |
-| ROUGE-1 | 0.3597 |
+| Cohen's Kappa | 0.3597 |
 | Avg Inference Latency | ~406 ms |
 
 
