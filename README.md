@@ -7,6 +7,8 @@
 
 **Semester:** Spring 2026
 
+**Student Info:** Abhishek Darji (019113471) and Aniket Anil Naik()
+
 ---
 
 ## 🔗 Quick Links — All Deliverables
@@ -534,8 +536,7 @@ GitHub Actions — retrain.yml
 ### Image Placeholder — GitHub Actions Successful Run
 > 📸 **[INSERT: Screenshot of green GitHub Actions workflow run]**
 
-### Image Placeholder — MLflow Model Registry
-> 📸 **[INSERT: Screenshot of MedPrompt_DistilBERT → Production in MLflow]**
+### Image — MLflow Model Registry
 <img width="2934" height="826" alt="image" src="https://github.com/user-attachments/assets/deae7bd5-be3f-48c8-a185-00008783c3bf" />
 
 
@@ -556,15 +557,16 @@ training set but too much dropout prevents the model from learning.
 
 **Metric:** Validation Macro F1
 
-| Dropout | Val Macro F1 | Notes |
+| Dropout | Val Macro F1 |
 |---|---|---|
-| 0.1 | *(fill from MLflow)* | Likely overfits |
-| 0.2 | *(fill from MLflow)* | — |
-| 0.3 | *(fill from MLflow)* | **Selected** |
-| 0.4 | *(fill from MLflow)* | Likely underfits |
+| 0.1 | 0.1086 |
+| 0.2 | 0.1826|
+| 0.3 | 0.0864 |
+| 0.4 | 0.0566 |
 
-### Image Placeholder — Experiment A Chart
-> 📸 **[INSERT: MLflow comparison chart — dropout vs val/macro_f1]**
+### Image — Experiment A Chart
+<img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/1f4c0b74-380a-4699-a6ec-e953ee9f0918" />
+
 
 ---
 
@@ -579,13 +581,14 @@ saturation point beyond which more data gives diminishing returns.
 
 | Data Fraction | Samples | Val Macro F1 |
 |---|---|---|
-| 25% | ~825 | *(fill from MLflow)* |
-| 50% | ~1,650 | *(fill from MLflow)* |
-| 75% | ~2,475 | *(fill from MLflow)* |
-| 100% | ~3,302 | *(fill from MLflow)* |
+| 25% | ~825 | 0.1284 |
+| 50% | ~1,650 | 0.1327 |
+| 75% | ~2,475 | 0.1297 |
+| 100% | ~3,302 | 0.1504 |
 
-### Image Placeholder — Experiment B Chart
-> 📸 **[INSERT: MLflow learning curve — data fraction vs val/macro_f1]**
+### Image — Experiment B Chart
+<img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/5b2d5cfe-6dac-4e5f-95c5-cadd027f2931" />
+
 
 ---
 
@@ -597,17 +600,18 @@ slow convergence and poor generalisation.
 
 **Variables tested:** lr ∈ {1e-5, 3e-5, 5e-5, 1e-4}
 
-**Metrics:** Validation Macro F1 + ROUGE-L
+**Metrics:** Validation Macro F1 
 
-| Learning Rate | Val Macro F1 | ROUGE-L | Notes |
+| Learning Rate | Val Macro F1 |
 |---|---|---|---|
-| 1e-5 | *(fill from MLflow)* | *(fill)* | Slow convergence |
-| 3e-5 | *(fill from MLflow)* | *(fill)* | **Selected** |
-| 5e-5 | *(fill from MLflow)* | *(fill)* | — |
-| 1e-4 | *(fill from MLflow)* | *(fill)* | Likely unstable |
+| 1e-5 | 0.106 | 
+| 3e-5 | 0.0939 |
+| 5e-5 | 0.1715 |
+| 1e-4 | 0.1141 |
 
-### Image Placeholder — Experiment C Chart
-> 📸 **[INSERT: MLflow comparison chart — lr vs val/macro_f1 and rougeL]**
+### Image — Experiment C Chart
+<img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/0b898c53-5254-4221-955d-37d5074356bd" />
+
 
 ---
 
@@ -620,14 +624,15 @@ We quantify the accuracy vs latency tradeoff on CPU.
 
 **Metrics:** Validation Macro F1 + training time (seconds)
 
-| Max Length | Val Macro F1 | Train Time (s) | Notes |
-|---|---|---|---|
-| 64 | *(fill from MLflow)* | *(fill)* | Truncates too much |
-| 128 | *(fill from MLflow)* | *(fill)* | — |
-| 256 | *(fill from MLflow)* | *(fill)* | **Selected** |
+| Max Length | Train Time (s) |
+|---|---|
+| 64 | 56.4 |
+| 128 | 104.1 |
+| 256 | 221 |
 
 ### Image Placeholder — Experiment D Chart
-> 📸 **[INSERT: MLflow chart — seq length vs F1 and train time]**
+<img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/8f1eb458-51c8-4924-818b-e1f8446c9c29" />
+
 
 ---
 
@@ -639,9 +644,6 @@ We quantify the accuracy vs latency tradeoff on CPU.
 | B — Data size | 25% → 100% | 100% | More data always helps here |
 | C — Learning rate | 1e-5 → 1e-4 | 3e-5 | Standard range for transformer fine-tuning |
 | D — Seq length | 64 → 256 | 256 | Best accuracy/speed tradeoff |
-
-### Image Placeholder — Full Ablation Comparison
-> 📸 **[INSERT: MLflow parallel coordinates plot showing all ablation runs]**
 
 ---
 
@@ -661,8 +663,7 @@ We quantify the accuracy vs latency tradeoff on CPU.
 | Metric | Description | Why We Use It |
 |---|---|---|
 | **ROUGE-1** | Unigram overlap | Word-level precision/recall vs reference |
-| **ROUGE-2** | Bigram overlap | Captures important two-word phrases |
-| **ROUGE-L** | Longest common subsequence | Captures sentence structure |
+
 
 **Why ROUGE not BLEU:** BLEU penalises short outputs heavily. Clinical summaries
 are intentionally concise, making BLEU unreliable. ROUGE-L is the standard
@@ -672,27 +673,20 @@ metric in clinical NLP summarization research.
 
 | Metric | Value |
 |---|---|
-| Accuracy | *(fill after notebook 03)* |
-| Macro F1 | *(fill after notebook 03)* |
-| Weighted F1 | *(fill after notebook 03)* |
+| Accuracy | 0.4073 |
+| Macro F1 | 0.4012 |
+| Weighted F1 | 0.3634 |
 | Cohen's Kappa | *(fill after notebook 03)* |
-| ROUGE-1 | *(fill after notebook 03)* |
-| ROUGE-2 | *(fill after notebook 03)* |
-| ROUGE-L | *(fill after notebook 03)* |
-| Avg Inference Latency | *(fill from app monitoring tab)* |
+| ROUGE-1 | 0.3597 |
+| Avg Inference Latency | ~406 ms |
 
-### Image Placeholder — Training Loss Curves
-> 📸 **[INSERT: MLflow train/loss and val/macro_f1 curves from notebook 03]**
-
-### Image Placeholder — Confusion Matrix
-> 📸 **[INSERT: 15×15 confusion matrix on test set]**
 
 ---
 
 ## 11. Live Demo & Inference
 
 ### Application URL
-**https://huggingface.co/spaces/abhishekdarji/medprompt**
+**https://huggingface.co/spaces/abhishekdarji23/medprompt**
 
 ### Application Tabs
 
@@ -720,11 +714,13 @@ metric in clinical NLP summarization research.
 - Design decisions table
 - MLOps pipeline diagram
 
-### Image Placeholder — Live Demo Screenshot
-> 📸 **[INSERT: Screenshot of Gradio app Tab 1 with a prediction]**
+### Image — Live Demo Screenshot
+<img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/109066bc-5c39-4ded-b63f-e6e8bcd398a0" />
+
 
 ### Image Placeholder — Monitoring Dashboard Screenshot
-> 📸 **[INSERT: Screenshot of Gradio app Tab 2 showing drift detection]**
+<img width="2934" height="1714" alt="image" src="https://github.com/user-attachments/assets/42619144-a60e-4e6a-a5f1-02ada42ee168" />
+
 
 ---
 
@@ -769,7 +765,8 @@ else:
 This prevents a poorly trained model from overwriting a good production model.
 
 ### Image Placeholder — Drift Detection in Action
-> 📸 **[INSERT: Screenshot showing drift warning triggered in Tab 2]**
+<img width="2934" height="742" alt="image" src="https://github.com/user-attachments/assets/2ab48d94-3736-4d5d-90c9-022c029ae106" />
+
 
 ---
 
@@ -939,13 +936,13 @@ git add . && git commit -m "Trigger CI/CD" && git push
 ### Phase 6 — Hugging Face Spaces Deployment
 
 ```bash
-git clone https://huggingface.co/spaces/abhishekdarji/medprompt
+git clone https://huggingface.co/spaces/abhishekdarji23/medprompt
 cp app/app.py app/requirements.txt medprompt/
 cd medprompt
 git add . && git commit -m "Deploy MedPrompt" && git push
 ```
 Wait ~3 minutes. Live at:
-https://huggingface.co/spaces/abhishekdarji/medprompt
+https://huggingface.co/spaces/abhishekdarji23/medprompt
 
 ---
 
@@ -1008,4 +1005,3 @@ DistilBERT is used under the Apache 2.0 license.
 
 ---
 
-*Documented using [Repomix](https://github.com/yamadashy/repomix)*
