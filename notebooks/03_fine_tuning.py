@@ -110,7 +110,8 @@ warmup_steps= int(cfg["training"]["warmup_ratio"] * total_steps)
 scheduler   = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=total_steps)
 
 # ── MLflow setup ──────────────────────────────────────────────
-mlflow.set_tracking_uri("sqlite:///outputs/mlflow.db")
+# mlflow.set_tracking_uri("sqlite:///outputs/mlflow.db") # Only for local systems
+mlflow.set_tracking_uri("./outputs/mlruns")
 mlflow.set_experiment(cfg["mlflow"]["experiment_name"])
 
 class_names  = [id_to_label[i] for i in sorted(id_to_label.keys())]
