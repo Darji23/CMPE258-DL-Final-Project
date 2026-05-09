@@ -246,8 +246,6 @@ representation in the validation or test sets. Stratified splitting guarantees
 each split reflects the same class proportions as the full dataset,
 giving reliable evaluation metrics.
 
-### Image Placeholder — Class Distribution Chart
-> 📸 **[INSERT: Bar chart of specialty frequencies from MLflow or matplotlib]**
 
 ---
 
@@ -336,8 +334,6 @@ and decoded back to text as the extractive summary.
 | **Total** | **~66.9M** |
 | **Trainable** | **~66.9M** |
 
-### Image Placeholder — Architecture Diagram
-> 📸 **[INSERT: Architecture diagram — draw.io or hand-drawn scan]**
 
 ---
 
@@ -533,8 +529,9 @@ GitHub Actions — retrain.yml
 | Monitoring | Live request stats dashboard (Gradio Tab 2) |
 | Drift detection | Jensen-Shannon divergence vs training distribution |
 
-### Image Placeholder — GitHub Actions Successful Run
-> 📸 **[INSERT: Screenshot of green GitHub Actions workflow run]**
+### Image — GitHub Actions Successful Run
+<img width="2934" height="1538" alt="image" src="https://github.com/user-attachments/assets/dce74fbd-f05d-483b-87af-34b7b17a2c91" />
+
 
 ### Image — MLflow Model Registry
 <img width="2934" height="826" alt="image" src="https://github.com/user-attachments/assets/deae7bd5-be3f-48c8-a185-00008783c3bf" />
