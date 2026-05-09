@@ -9,23 +9,26 @@ on:
       - 'src/model.py'
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   validate:
     name: Validate code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          node-version: '24'
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
       - name: Install validation deps
         run: pip install pyflakes pyyaml
 
-      - name: Syntax check all Python files
+      - name: Syntax check Python files
         run: |
           for f in notebooks/*.py src/*.py; do
             echo "Checking $f ..."
@@ -49,9 +52,11 @@ jobs:
     needs: validate
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
@@ -62,13 +67,12 @@ jobs:
           pip install rouge-score pyyaml pandas numpy huggingface_hub
 
       - name: Create required folders
-        run: |
-          mkdir -p data outputs artifacts
+        run: mkdir -p outputs artifacts
 
       - name: Verify dataset exists
         run: |
           ls data/
-          echo "Dataset file size: $(du -sh data/mtsamples.csv)"
+          echo "Dataset size: $(du -sh data/mtsamples.csv)"
 
       - name: Run preprocessing
         run: python notebooks/02_preprocessing.py
@@ -85,6 +89,7 @@ jobs:
         with:
           name: mlflow-runs
           path: outputs/mlflow.db
+          if-no-files-found: ignore
 
       - name: Post summary
         if: always()
