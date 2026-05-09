@@ -19,7 +19,7 @@
 | 🤗 **Model Weights (HF Hub)** | https://huggingface.co/abhishekdarji23/medprompt-distilbert |
 | 💻 **GitHub Repository** | https://github.com/darji23/CMPE258-DL-Final-Project |
 | 🎥 **Full Project Presentation (Long)** | *(add YouTube/Drive link)* |
-| 📄 **Slide Deck** | *(add Google Slides / PDF link)* |
+| 📄 **Slide Deck** | [*Slide Deck*](https://docs.google.com/presentation/d/1J4GgMQQwJasoOepBh1utlm-XjOz06GeW/edit?usp=sharing&ouid=112596860923378988724&rtpof=true&sd=true) |
 | 📊 **MLflow Experiment Artifacts** | See `artifacts/` folder |
 
 
