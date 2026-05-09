@@ -530,7 +530,7 @@ GitHub Actions — retrain.yml
 | Drift detection | Jensen-Shannon divergence vs training distribution |
 
 ### Image — GitHub Actions Successful Run
-<img width="2934" height="1538" alt="image" src="https://github.com/user-attachments/assets/dce74fbd-f05d-483b-87af-34b7b17a2c91" />
+<img width="2934" height="1656" alt="image" src="https://github.com/user-attachments/assets/55675b45-0a8e-45ea-9cc2-8ee4201a2b2a" />
 
 
 ### Image — MLflow Model Registry
