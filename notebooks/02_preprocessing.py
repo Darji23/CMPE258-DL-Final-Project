@@ -72,7 +72,7 @@ for lbl_str, spec in sorted(id_to_spec.items(), key=lambda x: int(x[0])):
 
 # ── Log to MLflow ─────────────────────────────────────────────
 print("\nLogging preprocessing metrics to MLflow ...")
-mlflow.set_tracking_uri("sqlite:///outputs/mlflow.db")
+mlflow.set_tracking_uri("./outputs/mlruns")
 mlflow.set_experiment("medprompt_preprocessing")
 
 with mlflow.start_run(run_name="preprocessing"):
