@@ -1,7 +1,7 @@
-# MedPrompt — Clinical Note Classification & Summarization
+# MedPrompt - Clinical Note Classification & Summarization
 ### An End-to-End MLOps Pipeline · DistilBERT · CPU-Friendly · Production-Ready
 
-**Course:** CMPE 258 — Deep Learning
+**Course:** CMPE 258 - Deep Learning
 
 **Institution:** San José State University
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 🔗 Quick Links — All Deliverables
+## 🔗 Quick Links - All Deliverables
 
 | Deliverable | Link |
 |---|---|
@@ -33,7 +33,7 @@
 4. [Team Members & Contributions](#4-team-members--contributions)
 5. [Dataset](#5-dataset)
 6. [Model Architecture](#6-model-architecture)
-7. [Design Decisions — Loss, Activation, Normalization](#7-design-decisions--loss-activation-normalization)
+7. [Design Decisions - Loss, Activation, Normalization](#7-design-decisions--loss-activation-normalization)
 8. [MLOps Pipeline](#8-mlops-pipeline)
 9. [Experiments & Ablation Studies](#9-experiments--ablation-studies)
 10. [Key Metrics & Evaluation](#10-key-metrics--evaluation)
@@ -50,8 +50,8 @@
 MedPrompt is a multi-task clinical NLP system that automatically classifies
 medical transcriptions into one of 15 medical specialties and generates
 extractive summaries of clinical notes. The system is built on a fine-tuned
-DistilBERT backbone with two custom task heads — a classification head and an
-extractive summarization head — trained jointly with a weighted multi-task loss
+DistilBERT backbone with two custom task heads - a classification head and an
+extractive summarization head - trained jointly with a weighted multi-task loss
 to handle severe class imbalance in the MTSamples dataset.
 
 The project implements a complete MLOps pipeline from raw data ingestion through
@@ -87,8 +87,8 @@ clinical workflow, and enable faster triage and routing of patient records.
 
 ### Our Approach
 
-We fine-tune **DistilBERT** — a distilled version of BERT pre-trained on
-general English text — on the MTSamples medical transcription dataset using
+We fine-tune **DistilBERT** - a distilled version of BERT pre-trained on
+general English text - on the MTSamples medical transcription dataset using
 a novel dual-head architecture that simultaneously learns specialty
 classification and token-level importance scoring for extractive summarization.
 
@@ -119,7 +119,7 @@ without credentialing requirements.
 
 **BioMistral (Labrak et al., 2024)** extends Mistral-7B with biomedical
 pre-training. We considered this as our base model but pivoted to DistilBERT
-for CPU compatibility and reproducibility — a deliberate design tradeoff
+for CPU compatibility and reproducibility - a deliberate design tradeoff
 between model scale and accessibility.
 
 ### Medical Text Classification
@@ -135,7 +135,7 @@ classification rather than fine-grained ICD codes.
 **MT-DNN (Liu et al., 2019)** showed that sharing representations across
 multiple NLP tasks through multi-task learning consistently improves
 performance on each individual task. Our dual-head architecture follows this
-principle — jointly training classification and summarization forces the shared
+principle - jointly training classification and summarization forces the shared
 encoder to learn richer clinical representations than either task alone.
 
 ### How Our Approach Differs
@@ -184,7 +184,7 @@ encoder to learn richer clinical representations than either task alone.
 | Field | Role | Description |
 |---|---|---|
 | `transcription` | **Input** | Raw clinical note text (cleaned and tokenized) |
-| `medical_specialty` | **Output (Task 1)** | Target class label — 15 specialties |
+| `medical_specialty` | **Output (Task 1)** | Target class label - 15 specialties |
 | `description` | **Output (Task 2)** | Reference summary for ROUGE evaluation |
 
 ### Class Distribution (Top 15 Specialties)
@@ -285,7 +285,7 @@ CrossEntropyLoss(w)           BCELoss
     total_loss = 0.6 × cls_loss + 0.4 × summary_loss
 ```
 
-### MedPromptHead — Classification
+### MedPromptHead - Classification
 
 ```
 Input: [CLS] token hidden state (batch × 768)
@@ -309,7 +309,7 @@ Input: [CLS] token hidden state (batch × 768)
 Output: logits (batch × 15)
 ```
 
-### ExtractiveSummaryHead — Summarization
+### ExtractiveSummaryHead - Summarization
 
 ```
 Input: all token hidden states (batch × seq_len × 768)
@@ -337,13 +337,13 @@ and decoded back to text as the extractive summary.
 
 ---
 
-## 7. Design Decisions — Loss, Activation, Normalization
+## 7. Design Decisions - Loss, Activation, Normalization
 
 This section explains every architectural and training choice made in this project
 and the justification for each. This directly addresses the professor's requirement
 to document *why* each parameter was chosen.
 
-### 7.1 Base Model — DistilBERT
+### 7.1 Base Model - DistilBERT
 
 **Choice:** `distilbert-base-uncased`
 
@@ -352,14 +352,14 @@ and 60% faster. For a dataset of ~4,700 records, a 7B-parameter model like
 BioMistral would severely overfit and require GPU resources unavailable to us.
 DistilBERT fits the scale of the problem appropriately.
 
-**Alternative considered:** BioMistral-7B — rejected due to GPU requirement
+**Alternative considered:** BioMistral-7B - rejected due to GPU requirement
 and risk of overfitting on small dataset.
 
-### 7.2 Loss Function — CrossEntropyLoss with Class Weights
+### 7.2 Loss Function - CrossEntropyLoss with Class Weights
 
 **Choice:** `nn.CrossEntropyLoss(weight=class_weights, label_smoothing=0.05)`
 
-**Why class weights:** The dataset has severe imbalance — Surgery has 1,103
+**Why class weights:** The dataset has severe imbalance - Surgery has 1,103
 training samples while Hematology-Oncology has ~90. Without class weights,
 the model learns to predict the majority class (Surgery) almost exclusively,
 achieving high accuracy but near-zero recall on minority classes. Inverse
@@ -375,14 +375,14 @@ all classes, regularising the output distribution.
 **Formula:** `w_c = N / (K × n_c)` where N = total samples, K = num classes,
 n_c = samples in class c.
 
-### 7.3 Activation Function — GELU
+### 7.3 Activation Function - GELU
 
 **Choice:** `nn.GELU()` in both hidden layers of MedPromptHead
 
 **Why:** DistilBERT uses GELU activation throughout its feed-forward networks
 internally. Using the same activation in our custom head keeps gradient
 magnitudes consistent when backpropagation flows from our head through the
-encoder. This is a principled choice — mixing activation functions at the
+encoder. This is a principled choice - mixing activation functions at the
 boundary between the pretrained model and the new head can cause gradient
 scale mismatches.
 
@@ -391,14 +391,14 @@ ReLU which hard-zeros them). This gives a smoother loss landscape and better
 gradient flow, particularly important for fine-tuning where small parameter
 updates dominate.
 
-### 7.4 Normalisation — LayerNorm
+### 7.4 Normalisation - LayerNorm
 
 **Choice:** `nn.LayerNorm(512)` between the first and second linear layers
 
 **Why:** Without normalisation, the activations after the first linear layer
 can drift significantly during training, destabilising the second layer's
 weight updates. LayerNorm normalises across the feature dimension (not the
-batch dimension like BatchNorm), making it independent of batch size — critical
+batch dimension like BatchNorm), making it independent of batch size - critical
 for small batch training on CPU.
 
 **LayerNorm vs BatchNorm:** BatchNorm computes statistics over the batch
@@ -406,28 +406,28 @@ dimension. With small batches (16 samples on CPU), batch statistics are noisy.
 LayerNorm computes statistics over the feature dimension, giving stable
 normalisation regardless of batch size.
 
-### 7.5 Dropout — 0.3
+### 7.5 Dropout - 0.3
 
 **Choice:** `nn.Dropout(p=0.3)` at two points in MedPromptHead
 
-**Why 0.3 and not the standard 0.1:** MTSamples training set has ~3,300 rows —
+**Why 0.3 and not the standard 0.1:** MTSamples training set has ~3,300 rows -
 very small for a transformer fine-tuning task. Higher dropout is a stronger
 regulariser and prevents the head from memorising training examples. Our
 ablation study (Experiment A) empirically confirmed that 0.3 outperforms
 0.1 and 0.2 on the validation set for this dataset size.
 
-### 7.6 Multi-task Loss Weight — λ = 0.6
+### 7.6 Multi-task Loss Weight - λ = 0.6
 
 **Choice:** `total_loss = 0.6 × cls_loss + 0.4 × summary_loss`
 
-**Why 0.6 for classification:** Classification is the harder task — 15 classes
+**Why 0.6 for classification:** Classification is the harder task - 15 classes
 with severe imbalance. Summarization (binary token scoring) converges faster.
 The 0.6 weighting ensures classification gradients dominate early training
 while summarization still contributes meaningful signal. We experimented with
 equal weighting (0.5/0.5) and found the classification accuracy dropped by
 ~3% due to insufficient gradient signal on the harder task.
 
-### 7.7 Optimiser — AdamW with Cosine Learning Rate Schedule
+### 7.7 Optimiser - AdamW with Cosine Learning Rate Schedule
 
 **Choice:** `torch.optim.AdamW(lr=3e-5, weight_decay=0.01)` + cosine annealing
 
@@ -445,7 +445,7 @@ step-decay schedules for fine-tuning.
 2e-5 to 5e-5. Our ablation study (Experiment C) tested 1e-5, 3e-5, 5e-5,
 and 1e-4 and confirmed 3e-5 as optimal for this dataset.
 
-### 7.8 Sequence Length — 256 tokens
+### 7.8 Sequence Length - 256 tokens
 
 **Choice:** `max_length=256`
 
@@ -482,14 +482,14 @@ in the first 200 tokens.
 Developer pushes code to GitHub (main branch)
         │
         ▼
-GitHub Actions — retrain.yml
+GitHub Actions - retrain.yml
   ├── Step 1: Validate Python syntax (pyflakes)
   ├── Step 2: Validate training_config.yaml schema
   └── Step 3: Run preprocessing + 1-epoch training
                     │
                     ▼ (if macro_f1 >= threshold)
               Auto-deploy check
-              (notebooks/03_fine_tuning.py — Step 8)
+              (notebooks/03_fine_tuning.py - Step 8)
                     │
                     ▼
               MLflow Model Registry
@@ -512,11 +512,11 @@ GitHub Actions — retrain.yml
 
 | Level | Description | Status |
 |---|---|---|
-| 0 | No MLOps — manual everything | ✅ Surpassed |
-| 1 | DevOps only — automated builds | ✅ Surpassed |
-| 2 | Automated training — tracked, reproducible | ✅ Achieved |
-| 3 | Automated deployment — model registry, low-friction release | ✅ Achieved |
-| 4 | Full automation — CI/CD, monitoring, drift detection | ✅ Achieved |
+| 0 | No MLOps - manual everything | ✅ Surpassed |
+| 1 | DevOps only - automated builds | ✅ Surpassed |
+| 2 | Automated training - tracked, reproducible | ✅ Achieved |
+| 3 | Automated deployment - model registry, low-friction release | ✅ Achieved |
+| 4 | Full automation - CI/CD, monitoring, drift detection | ✅ Achieved |
 
 ### Level 4 Evidence
 
@@ -529,11 +529,11 @@ GitHub Actions — retrain.yml
 | Monitoring | Live request stats dashboard (Gradio Tab 2) |
 | Drift detection | Jensen-Shannon divergence vs training distribution |
 
-### Image — GitHub Actions Successful Run
+### Image - GitHub Actions Successful Run
 <img width="2934" height="1656" alt="image" src="https://github.com/user-attachments/assets/55675b45-0a8e-45ea-9cc2-8ee4201a2b2a" />
 
 
-### Image — MLflow Model Registry
+### Image - MLflow Model Registry
 <img width="2934" height="826" alt="image" src="https://github.com/user-attachments/assets/deae7bd5-be3f-48c8-a185-00008783c3bf" />
 
 
@@ -545,7 +545,7 @@ All experiments were run using the same base configuration
 (DistilBERT, lr=3e-5, batch=16, max_len=256) with one variable changed
 at a time. All results logged to MLflow experiment `medprompt_ablation`.
 
-### Experiment A — Dropout Sweep
+### Experiment A - Dropout Sweep
 
 **Hypothesis:** Higher dropout prevents overfitting on the small MTSamples
 training set but too much dropout prevents the model from learning.
@@ -561,13 +561,13 @@ training set but too much dropout prevents the model from learning.
 | 0.3 | 0.0864 |
 | 0.4 | 0.0566 |
 
-### Image — Experiment A Chart
+### Image - Experiment A Chart
 <img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/1f4c0b74-380a-4699-a6ec-e953ee9f0918" />
 
 
 ---
 
-### Experiment B — Training Data Size (Learning Curves)
+### Experiment B - Training Data Size (Learning Curves)
 
 **Hypothesis:** With more data the model improves, but there may be a
 saturation point beyond which more data gives diminishing returns.
@@ -583,12 +583,12 @@ saturation point beyond which more data gives diminishing returns.
 | 75% | ~2,475 | 0.1297 |
 | 100% | ~3,302 | 0.1504 |
 
-### Image — Experiment B Chart
+### Image - Experiment B Chart
 <img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/5b2d5cfe-6dac-4e5f-95c5-cadd027f2931" />
 
 ---
 
-### Experiment C — Learning Rate Sweep
+### Experiment C - Learning Rate Sweep
 
 **Hypothesis:** Learning rate is the most sensitive hyperparameter for
 transformer fine-tuning. Too high causes divergence; too low causes
@@ -605,13 +605,13 @@ slow convergence and poor generalisation.
 | 5e-5 | 0.1715 |
 | 1e-4 | 0.1141 |
 
-### Image — Experiment C Chart
+### Image - Experiment C Chart
 <img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/0b898c53-5254-4221-955d-37d5074356bd" />
 
 
 ---
 
-### Experiment D — Sequence Length vs Latency
+### Experiment D - Sequence Length vs Latency
 
 **Hypothesis:** Longer sequences capture more context but increase computation.
 We quantify the accuracy vs latency tradeoff on CPU.
@@ -626,7 +626,7 @@ We quantify the accuracy vs latency tradeoff on CPU.
 | 128 | 104.1 |
 | 256 | 221 |
 
-### Image Placeholder — Experiment D Chart
+### Image Placeholder - Experiment D Chart
 <img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/8f1eb458-51c8-4924-818b-e1f8446c9c29" />
 
 
@@ -636,10 +636,10 @@ We quantify the accuracy vs latency tradeoff on CPU.
 
 | Experiment | Variable | Winner | Reason |
 |---|---|---|---|
-| A — Dropout | 0.1 → 0.4 | 0.3 | Best regularisation for dataset size |
-| B — Data size | 25% → 100% | 100% | More data always helps here |
-| C — Learning rate | 1e-5 → 1e-4 | 3e-5 | Standard range for transformer fine-tuning |
-| D — Seq length | 64 → 256 | 256 | Best accuracy/speed tradeoff |
+| A - Dropout | 0.1 → 0.4 | 0.3 | Best regularisation for dataset size |
+| B - Data size | 25% → 100% | 100% | More data always helps here |
+| C - Learning rate | 1e-5 → 1e-4 | 3e-5 | Standard range for transformer fine-tuning |
+| D - Seq length | 64 → 256 | 256 | Best accuracy/speed tradeoff |
 
 ---
 
@@ -650,7 +650,7 @@ We quantify the accuracy vs latency tradeoff on CPU.
 | Metric | Formula | Why We Use It |
 |---|---|---|
 | **Accuracy** | correct / total | Overall performance baseline |
-| **Macro F1** | mean F1 across all classes | Treats all 15 classes equally — penalises ignoring minority classes |
+| **Macro F1** | mean F1 across all classes | Treats all 15 classes equally - penalises ignoring minority classes |
 | **Weighted F1** | F1 weighted by class frequency | Reflects real-world distribution |
 | **Cohen's Kappa** | (observed - expected) / (1 - expected) | Agreement corrected for chance |
 
@@ -675,14 +675,14 @@ We quantify the accuracy vs latency tradeoff on CPU.
 
 ### Application Tabs
 
-**Tab 1 — Inference**
+**Tab 1 - Inference**
 - Input: paste any clinical note (up to 1,500 characters)
 - Output 1: predicted medical specialty + confidence score
 - Output 2: extractive summary of key clinical phrases
 - Output 3: inference latency in milliseconds
 - Feedback: thumbs up/down button feeding the monitoring system
 
-**Tab 2 — Monitoring & Drift Detection**
+**Tab 2 - Monitoring & Drift Detection**
 - Total requests served
 - Average and P95 latency
 - Top predicted specialties distribution
@@ -690,20 +690,20 @@ We quantify the accuracy vs latency tradeoff on CPU.
 - Jensen-Shannon drift score vs training distribution
 - Drift alert if JS divergence exceeds 0.3
 
-**Tab 3 — Model Metrics**
+**Tab 3 - Model Metrics**
 - Test set performance table
 - Ablation study results
 
-**Tab 4 — About**
+**Tab 4 - About**
 - Full architecture description
 - Design decisions table
 - MLOps pipeline diagram
 
-### Image — Live Demo Screenshot
+### Image - Live Demo Screenshot
 <img width="2934" height="1744" alt="image" src="https://github.com/user-attachments/assets/109066bc-5c39-4ded-b63f-e6e8bcd398a0" />
 
 
-### Image Placeholder — Monitoring Dashboard Screenshot
+### Image Placeholder - Monitoring Dashboard Screenshot
 <img width="2934" height="1714" alt="image" src="https://github.com/user-attachments/assets/42619144-a60e-4e6a-a5f1-02ada42ee168" />
 
 
@@ -749,7 +749,7 @@ else:
 
 This prevents a poorly trained model from overwriting a good production model.
 
-### Image Placeholder — Drift Detection in Action
+### Image Placeholder - Drift Detection in Action
 <img width="2934" height="742" alt="image" src="https://github.com/user-attachments/assets/2ab48d94-3736-4d5d-90c9-022c029ae106" />
 
 
@@ -842,15 +842,15 @@ pip install -r requirements.txt
 
 ---
 
-### Phase 1 — Data Pipeline
+### Phase 1 - Data Pipeline
 
-#### Notebook 01 — Ingestion
+#### Notebook 01 - Ingestion
 ```bash
 python notebooks/01_ingestion.py
 ```
 Reads CSV, runs quality audit, saves `outputs/audit.json`.
 
-#### Notebook 02 — Preprocessing
+#### Notebook 02 - Preprocessing
 ```bash
 python notebooks/02_preprocessing.py
 ```
@@ -859,9 +859,9 @@ saves train/val/test CSVs, label_map.json, class_weights.json.
 
 ---
 
-### Phase 2 — Training
+### Phase 2 - Training
 
-#### Notebook 03 — Fine-tuning (~20–30 min on CPU)
+#### Notebook 03 - Fine-tuning (~20–30 min on CPU)
 ```bash
 export HF_TOKEN=hf_xxxxxxxxxxxx    # Mac/Linux
 python notebooks/03_fine_tuning.py
@@ -879,9 +879,9 @@ Open http://127.0.0.1:5000 → click **Model training** tab.
 
 ---
 
-### Phase 3 — Ablation Studies
+### Phase 3 - Ablation Studies
 
-#### Notebook 04 — Ablation (~60–90 min on CPU)
+#### Notebook 04 - Ablation (~60–90 min on CPU)
 ```bash
 python notebooks/04_ablation.py
 ```
@@ -891,9 +891,9 @@ screenshot 4 charts → save to `artifacts/`.
 
 ---
 
-### Phase 4 — Model Registry & Push
+### Phase 4 - Model Registry & Push
 
-#### Notebook 05 — Register and Push
+#### Notebook 05 - Register and Push
 ```bash
 python notebooks/05_register_push.py
 ```
@@ -902,7 +902,7 @@ pushes model weights to Hugging Face Hub.
 
 ---
 
-### Phase 5 — CI/CD Setup
+### Phase 5 - CI/CD Setup
 
 #### Add GitHub Secret
 GitHub repo → Settings → Secrets → Actions → New secret:
@@ -918,7 +918,7 @@ git add . && git commit -m "Trigger CI/CD" && git push
 
 ---
 
-### Phase 6 — Hugging Face Spaces Deployment
+### Phase 6 - Hugging Face Spaces Deployment
 
 ```bash
 git clone https://huggingface.co/spaces/abhishekdarji23/medprompt
@@ -944,40 +944,40 @@ Maturity Level 4.
 
 The most important lessons learned:
 
-1. **Class imbalance is the biggest challenge** — inverse frequency weighting
+1. **Class imbalance is the biggest challenge** - inverse frequency weighting
    and label smoothing were essential to prevent the model from collapsing to
    majority-class prediction.
 
-2. **Multi-task learning helps** — jointly training classification and
+2. **Multi-task learning helps** - jointly training classification and
    summarization produced better classification F1 than single-task training
    by forcing the encoder to learn richer representations.
 
-3. **Ablation studies are essential** — our dropout sweep revealed that
+3. **Ablation studies are essential** - our dropout sweep revealed that
    standard dropout (0.1) is insufficient for this small dataset, and the
    learning rate sweep prevented us from using an overly conservative LR.
 
-4. **MLOps pays off immediately** — the auto-deploy threshold saved us from
+4. **MLOps pays off immediately** - the auto-deploy threshold saved us from
    accidentally pushing an undertrained model during development.
 
 ### Future Work
 
-1. **Larger model** — fine-tune BioMistral-7B or ClinicalBERT on a GPU for
+1. **Larger model** - fine-tune BioMistral-7B or ClinicalBERT on a GPU for
    substantially higher F1, particularly on minority specialties.
 
-2. **MIMIC-III dataset** — replace MTSamples with the larger, more realistic
+2. **MIMIC-III dataset** - replace MTSamples with the larger, more realistic
    MIMIC-III discharge notes for production-quality results.
 
-3. **ICD-10 code prediction** — extend the model to predict specific diagnostic
+3. **ICD-10 code prediction** - extend the model to predict specific diagnostic
    codes rather than broad specialty categories.
 
-4. **Active learning** — use model uncertainty to select the most informative
+4. **Active learning** - use model uncertainty to select the most informative
    unlabelled samples for human annotation, improving data efficiency.
 
-5. **Generative summarization** — replace the extractive head with a small
+5. **Generative summarization** - replace the extractive head with a small
    decoder (e.g. T5-small) for abstractive summaries that paraphrase rather
    than extract.
 
-6. **Federated learning** — train across multiple hospital systems without
+6. **Federated learning** - train across multiple hospital systems without
    sharing raw patient data, addressing privacy concerns in clinical NLP.
 
 ---
